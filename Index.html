@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associação de Mães do Pimentas - Gestão ODS 2</title>
+    <style>
+        :root {
+            --primary: #1b4f72;
+            --primary-light: #2e86c1;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --text: #1a202c;
+            --success-bg: #d4efdf;
+            --success-border: #1e8449;
+            --warn-bg: #fcf3cf;
+            --warn-border: #b7950b;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); margin: 0; padding: 16px; }
+        .app-container { max-width: 440px; margin: 0 auto; }
+        
+        /* Cabeçalho */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+        header h1 { margin: 0; font-size: 20px; }
+        header p { margin: 6px 0 0; font-size: 13px; opacity: 0.9; }
+
+        /* Navegação por Abas (WCAG >= 48px) */
+        nav { display: flex; gap: 8px; margin-bottom: 16px; }
+        nav button {
+            flex: 1;
+            min-height: 48px;
+            border: none;
+            border-radius: 8px;
+            background: #d6eaf8;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 6px rgba(27,79,114,0.3);
+        }
+
+        /* Cartões e Painéis */
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 16px;
+        }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+        .stat-box {
+            background: #ebf5fb;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-light);
+        }
+        .stat-box span { display: block; font-size: 24px; font-weight: bold; color: var(--primary); }
+        .stat-box small { font-size: 12px; color: #4a5568; }
+
+        /* Formulário */
+        label { display: block; font-weight: bold; margin: 12px 0 6px; font-size: 14px; }
+        input, select {
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 12px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .btn-submit {
+            width: 100%;
+            min-height: 50px;
+            margin-top: 18px;
+            background: #1e8449;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Alertas Acessíveis (RNF03) */
+        .alert {
+            padding: 14px;
+            border-radius: 8px;
+            border-left: 6px solid;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .alert-success { background: var(--success-bg); border-color: var(--success-border); color: #145a32; }
+        .alert-warn { background: var(--warn-bg); border-color: var(--warn-border); color: #7d6608; }
+        .hidden { display: none; }
+        footer { text-align: center; font-size: 12px; color: #718096; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Associação de Mães do Pimentas</h1>
+            <p>Sistema Operacional de Doações & Stock (ODS 2)</p>
+        </header>
+
+        <nav>
+            <button id="tab-home" class="active" onclick="mostrarTela('home')">Início</button>
+            <button id="tab-cadastro" onclick="mostrarTela('cadastro')">Novo Registo</button>
+            <button id="tab-alertas" onclick="mostrarTela('alertas')">Alertas (2)</button>
+        </nav>
+
+        <!-- TELA 1: PAINEL INICIAL -->
+        <section id="tela-home" class="card">
+            <h2 style="margin-top:0; font-size:18px;">Resumo Operacional - Hoje</h2>
+            <p style="font-size:14px; color:#4a5568;">Bem-vinda, Coordenação. Selecione uma opção acima para registar entregas ou verificar o stock.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span id="contador-cestas">14</span>
+                    <small>Cestas em Stock</small>
+                </div>
+                <div class="stat-box">
+                    <span id="contador-entregas">28</span>
+                    <small>Famílias Atendidas</small>
+                </div>
+            </div>
+
+            <button class="btn-submit" style="background:var(--primary);" onclick="mostrarTela('cadastro')">+ Registar Nova Entrega</button>
+        </section>
+
+        <!-- TELA 2: FORMULÁRIO DE REGISTO -->
+        <section id="tela-cadastro" class="card hidden">
+            <h2 style="margin-top:0; font-size:18px;">Registo de Beneficiário</h2>
+            <form onsubmit="registarEntrega(event)">
+                <label for="nome">Nome Completo do Beneficiário *</label>
+                <input type="text" id="nome" required placeholder="Ex: Maria Helena Souza">
+
+                <label for="item">Item Entregue (ODS 2) *</label>
+                <select id="item" required>
+                    <option value="">Selecione o item...</option>
+                    <option value="Cesta Básica">Cesta Básica Completa</option>
+                    <option value="Kit Leite Infantil">Kit Leite / Alimentos Infantis</option>
+                    <option value="Kit Hortifruti">Kit Hortifruti Comunitário</option>
+                </select>
+
+                <button type="submit" class="btn-submit">✔ Confirmar Entrega</button>
+            </form>
+        </section>
+
+        <!-- TELA 3: ALERTAS E HISTÓRICO -->
+        <section id="tela-alertas" class="card hidden">
+            <h2 style="margin-top:0; font-size:18px;">Monitorização de Stock</h2>
+            <div id="feedback-dinamico" class="alert alert-success hidden"></div>
+            
+            <div class="alert alert-warn">
+                <strong>⚠ Atenção (Stock Crítico):</strong> Cestas Básicas abaixo do limite mínimo de 15 unidades.
+            </div>
+            <div class="alert alert-success">
+                <strong>✔ Sistema Ativo:</strong> Sincronização local operacional (WCAG 2.1).
+            </div>
+        </section>
+
+        <footer>MVP Académico • Guarulhos - SP • Alinhado ao ODS 2</footer>
+    </div>
+
+    <script>
+        let cestas = 14;
+        let entregas = 28;
+
+        function mostrarTela(tela) {
+            document.getElementById('tela-home').classList.add('hidden');
+            document.getElementById('tela-cadastro').classList.add('hidden');
+            document.getElementById('tela-alertas').classList.add('hidden');
+
+            document.getElementById('tab-home').classList.remove('active');
+            document.getElementById('tab-cadastro').classList.remove('active');
+            document.getElementById('tab-alertas').classList.remove('active');
+
+            document.getElementById('tela-' + tela).classList.remove('hidden');
+            document.getElementById('tab-' + tela).classList.add('active');
+        }
+
+        function registarEntrega(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const item = document.getElementById('item').value;
+
+            if (item === 'Cesta Básica' && cestas > 0) cestas--;
+            entregas++;
+
+            document.getElementById('contador-cestas').innerText = cestas;
+            document.getElementById('contador-entregas').innerText = entregas;
+
+            const feedback = document.getElementById('feedback-dinamico');
+            feedback.innerHTML = `<strong>✔ Entrega Registada:</strong> ${item} entregue para <b>${nome}</b>.`;
+            feedback.classList.remove('hidden');
+
+            document.getElementById('nome').value = '';
+            document.getElementById('item').value = '';
+            mostrarTela('alertas');
+        }
+    </script>
+</body>
+</html>
