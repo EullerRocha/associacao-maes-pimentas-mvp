@@ -20,7 +20,6 @@
         body { background-color: var(--bg); color: var(--text); margin: 0; padding: 16px; }
         .app-container { max-width: 440px; margin: 0 auto; }
         
-        /* Cabeçalho */
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
@@ -33,7 +32,6 @@
         header h1 { margin: 0; font-size: 20px; }
         header p { margin: 6px 0 0; font-size: 13px; opacity: 0.9; }
 
-        /* Navegação por Abas (WCAG >= 48px) */
         nav { display: flex; gap: 8px; margin-bottom: 16px; }
         nav button {
             flex: 1;
@@ -53,7 +51,6 @@
             box-shadow: 0 2px 6px rgba(27,79,114,0.3);
         }
 
-        /* Cartões e Painéis */
         .card {
             background: var(--card);
             padding: 20px;
@@ -72,7 +69,6 @@
         .stat-box span { display: block; font-size: 24px; font-weight: bold; color: var(--primary); }
         .stat-box small { font-size: 12px; color: #4a5568; }
 
-        /* Formulário */
         label { display: block; font-weight: bold; margin: 12px 0 6px; font-size: 14px; }
         input, select {
             width: 100%;
@@ -95,7 +91,6 @@
             cursor: pointer;
         }
 
-        /* Alertas Acessíveis (RNF03) */
         .alert {
             padding: 14px;
             border-radius: 8px;
@@ -122,7 +117,6 @@
             <button id="tab-alertas" onclick="mostrarTela('alertas')">Alertas (2)</button>
         </nav>
 
-        <!-- TELA 1: PAINEL INICIAL -->
         <section id="tela-home" class="card">
             <h2 style="margin-top:0; font-size:18px;">Resumo Operacional - Hoje</h2>
             <p style="font-size:14px; color:#4a5568;">Bem-vinda, Coordenação. Selecione uma opção acima para registar entregas ou verificar o stock.</p>
@@ -141,7 +135,6 @@
             <button class="btn-submit" style="background:var(--primary);" onclick="mostrarTela('cadastro')">+ Registar Nova Entrega</button>
         </section>
 
-        <!-- TELA 2: FORMULÁRIO DE REGISTO -->
         <section id="tela-cadastro" class="card hidden">
             <h2 style="margin-top:0; font-size:18px;">Registo de Beneficiário</h2>
             <form onsubmit="registarEntrega(event)">
@@ -160,7 +153,6 @@
             </form>
         </section>
 
-        <!-- TELA 3: ALERTAS E HISTÓRICO -->
         <section id="tela-alertas" class="card hidden">
             <h2 style="margin-top:0; font-size:18px;">Monitorização de Stock</h2>
             <div id="feedback-dinamico" class="alert alert-success hidden"></div>
