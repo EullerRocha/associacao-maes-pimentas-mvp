@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    color: #1a1a1a;
+}
+.container {
+    max-width: 420px;
+    margin: 0 auto;
+}
+h1 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+/* Áreas de toque WCAG >= 44x44px */
+.btn-primary, .btn-secondary {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 14px;
+    margin: 12px 0;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    min-height: 48px;
+    border: none;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #1b4f72;
+    color: #ffffff;
+}
+.btn-secondary {
+    background-color: #d5dbdb;
+    color: #1a1a1a;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+input, select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #566573;
+    border-radius: 6px;
+    min-height: 44px;
+}
+/* Redundância visual RNF03 (ícone + texto + borda) */
+.alert {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 6px;
+    border-left: 6px solid;
+    font-size: 16px;
+}
+.alert-success {
+    background-color: #d4efdf;
+    border-color: #1e8449;
+    color: #145a32;
+}
+.alert-warning {
+    background-color: #fcf3cf;
+    border-color: #b7950b;
+    color: #7d6608;
+}
